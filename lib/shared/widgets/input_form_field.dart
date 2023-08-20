@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class InputFormField extends StatefulWidget {
-  final String label;
+  final String? label;
   final TextInputType? keyboardType;
   final String? hintText;
   final TextEditingController? controller;
@@ -11,7 +11,7 @@ class InputFormField extends StatefulWidget {
 
   const InputFormField({
     super.key,
-    required this.label,
+    this.label = null,
     this.keyboardType,
     this.hintText,
     this.controller,
@@ -29,13 +29,15 @@ class _InputFormFieldState extends State<InputFormField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.label,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        widget.label != null
+            ? Text(
+                widget.label!,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            : const SizedBox(height: 0, width: 0),
         SizedBox(
           height: 50,
           child: TextFormField(

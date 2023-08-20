@@ -11,7 +11,7 @@ class AuthCubit extends Cubit<AuthState> {
     required this.authRepository,
   }) : super(AuthState());
 
-  //* Login function
+  //* Login States emitted
   login({
     required email,
     required password,
@@ -50,7 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  //* Register function
+  //* Register States emitted
   register({
     required name,
     required email,
@@ -86,6 +86,39 @@ class AuthCubit extends Cubit<AuthState> {
           successRegistration: false,
           errorRegistration: true,
           message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  // * Init States emitted
+  checkAuthState() async {
+    try {
+      emit(
+        state.copyWith(
+          isCheckingAuthState: true,
+          successCheckingAuthState: false,
+          errorCheckingAuthState: false,
+        ),
+      );
+
+      var user = await authRepository.getUser();
+
+      emit(
+        state.copyWith(
+          user: user,
+          isCheckingAuthState: false,
+          successCheckingAuthState: true,
+          errorCheckingAuthState: false,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          message: e.toString(),
+          isCheckingAuthState: false,
+          successCheckingAuthState: false,
+          errorCheckingAuthState: true,
         ),
       );
     }

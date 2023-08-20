@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
         statusBarColor: Colors.transparent,

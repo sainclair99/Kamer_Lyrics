@@ -13,6 +13,11 @@ class AuthState {
   final bool successRegistration;
   final bool errorRegistration;
 
+  // * Init States
+  final bool isCheckingAuthState;
+  final bool successCheckingAuthState;
+  final bool errorCheckingAuthState;
+
   AuthState({
     this.user,
     this.message,
@@ -24,6 +29,10 @@ class AuthState {
     this.isRegistrating = false,
     this.errorRegistration = false,
     this.successRegistration = false,
+    //* init
+    this.isCheckingAuthState = false,
+    this.successCheckingAuthState = false,
+    this.errorCheckingAuthState = false,
   });
 
   AuthState copyWith({
@@ -35,6 +44,9 @@ class AuthState {
     bool? isRegistrating,
     bool? successRegistration,
     bool? errorRegistration,
+    bool? isCheckingAuthState,
+    bool? successCheckingAuthState,
+    bool? errorCheckingAuthState,
   }) =>
       AuthState(
         user: user ?? this.user,
@@ -47,5 +59,11 @@ class AuthState {
         isRegistrating: isRegistrating ?? this.isRegistrating,
         successRegistration: successRegistration ?? this.successRegistration,
         errorRegistration: errorRegistration ?? this.errorRegistration,
+        //* init
+        isCheckingAuthState: isCheckingAuthState ?? this.isCheckingAuthState,
+        successCheckingAuthState:
+            successCheckingAuthState ?? this.successCheckingAuthState,
+        errorCheckingAuthState:
+            errorCheckingAuthState ?? this.errorCheckingAuthState,
       );
 }

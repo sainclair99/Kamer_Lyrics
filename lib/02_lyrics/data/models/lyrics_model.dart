@@ -37,5 +37,6 @@ class LyricsModel {
         updatedAt: json['updated_at'],
         albumId: json['album_id'],
         userId: json['user_id'],
+        image: json['image'],
       );
 }

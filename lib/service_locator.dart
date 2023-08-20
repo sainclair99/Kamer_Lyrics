@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:kamer_lyrics/intercetor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '01_auth/buisness_logic/cubit/auth_cubit.dart';
 import '01_auth/data/repositories/auth_repository.dart';
@@ -9,6 +11,10 @@ import '02_lyrics/data/repositories/lyrics_repository.dart';
 final getIt = GetIt.instance;
 
 void setupLocator() {
+  getIt.registerLazySingleton(
+    () => SharedPreferences.getInstance(),
+  );
+
   getIt.registerSingleton<Dio>(
     Dio(
       BaseOptions(
@@ -17,7 +23,9 @@ void setupLocator() {
           'Accept': 'application/json',
         },
       ),
-    ),
+    )..interceptors.add(
+        TokenInterceptor(),
+      ),
   );
 
   getIt.registerSingleton<AuthRepository>(

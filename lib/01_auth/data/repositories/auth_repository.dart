@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user_model.dart';
 
@@ -7,6 +8,7 @@ class AuthRepository {
 
   AuthRepository({required this.dio});
 
+  // * --------------------
   Future<UserModel?> login({
     required email,
     required password,
@@ -22,10 +24,18 @@ class AuthRepository {
 
     var data = response.data;
 
+    // !---------------------
+    var token = data['token'];
+    if (token != null) {
+      var prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', token);
+    }
+    // !---------------------
+
     return UserModel.fromJson(data['user']);
   }
 
-  // * NEW register
+  // * ------------------
   Future<UserModel?> register({
     required name,
     required email,
@@ -42,7 +52,14 @@ class AuthRepository {
     );
 
     var data = response.data;
+    
 
     return UserModel.fromJson(data['user']);
+  }
+  
+  // * ----------------------
+  Future<UserModel> getUser() async {
+    Response response = await dio.get('/api/me');
+    return UserModel.fromJson(response.data);
   }
 }

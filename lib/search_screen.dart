@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:kamer_lyrics/shared/widgets/input_form_field.dart';
 
 @RoutePage()
 class SearchScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class _SearchScreenState extends State<SearchScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
@@ -23,21 +24,22 @@ class _SearchScreenState extends State<SearchScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: 'Search : Lyrics, Artist, Album',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
+        title: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.0),
+          child: SizedBox(
+            height: 50,
+            child: InputFormField(
+              hintText: 'Search : Lyrics, Artist, Album...',
             ),
           ),
         ),
-        bottom: const TabBar(
-          tabs: [
-            Text('data'),
-            Text('data'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Text('GENRES'),
+            Text('LYRICS'),
+            Text('ARTISTS'),
+            Text('TOP 30'),
           ],
         ),
         actions: [
@@ -47,14 +49,14 @@ class _SearchScreenState extends State<SearchScreen>
           ),
         ],
       ),
-      body: Container(
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            Text('data'),
-            Text('data'),
-          ],
-        ),
+      body: TabBarView(
+        controller: _tabController,
+        children: const [
+          Center(child: Text('Genre')),
+          Center(child: Text('Lyrics')),
+          Center(child: Text('Artist')),
+          Center(child: Text('Top 30')),
+        ],
       ),
     );
   }
