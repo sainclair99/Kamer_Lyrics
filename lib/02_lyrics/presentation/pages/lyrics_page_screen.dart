@@ -8,7 +8,6 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:kamer_lyrics/shared/utils/app_fonts.dart';
 import 'package:kamer_lyrics/shared/widgets/youtube_player_widget.dart';
 
-import '../../../service_locator.dart';
 import '../../data/models/lyrics_model.dart';
 
 @RoutePage()

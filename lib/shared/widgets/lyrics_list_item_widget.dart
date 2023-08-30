@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kamer_lyrics/02_lyrics/business_logic/cubit/lyrics_cubit.dart';
 import 'package:kamer_lyrics/02_lyrics/data/models/lyrics_model.dart';
 import 'package:kamer_lyrics/service_locator.dart';

@@ -2,12 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kamer_lyrics/shared/routes/routes.dart';
-import 'package:kamer_lyrics/shared/utils/app_colors.dart';
 import 'package:kamer_lyrics/shared/utils/app_fonts.dart';
 
 import '../../00_theme/business_logic/cubit/theme_cubit.dart';
 import '../../01_auth/buisness_logic/cubit/auth_cubit.dart';
-import '../../01_auth/data/models/user_model.dart';
 import '../../service_locator.dart';
 
 class DrawerWidget extends StatefulWidget {

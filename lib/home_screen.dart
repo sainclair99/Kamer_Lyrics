@@ -7,7 +7,6 @@ import 'package:kamer_lyrics/03_artist/business_logic/cubit/artist_cubit.dart';
 import 'package:kamer_lyrics/05_genres/business_logic/cubit/genre_cubit.dart';
 import 'package:kamer_lyrics/shared/routes/routes.dart';
 
-import '00_theme/business_logic/cubit/theme_cubit.dart';
 import '02_lyrics/business_logic/cubit/lyrics_cubit.dart';
 import 'shared/utils/app_colors.dart';
 import 'shared/utils/app_fonts.dart';
