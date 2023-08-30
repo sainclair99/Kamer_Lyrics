@@ -1,16 +1,44 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kamer_lyrics/02_lyrics/business_logic/cubit/lyrics_cubit.dart';
 import 'package:kamer_lyrics/shared/utils/app_colors.dart';
 
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:kamer_lyrics/shared/utils/app_fonts.dart';
+import 'package:kamer_lyrics/shared/widgets/youtube_player_widget.dart';
 
-import '../../../shared/routes/routes.dart';
+import '../../../service_locator.dart';
+import '../../data/models/lyrics_model.dart';
 
 @RoutePage()
-class LyricsPageScreen extends StatelessWidget {
-  const LyricsPageScreen({super.key});
+class LyricsPageScreen extends StatefulWidget {
+  final LyricsModel lyricsModel;
+  const LyricsPageScreen({
+    super.key,
+    required this.lyricsModel,
+  });
 
+  @override
+  State<LyricsPageScreen> createState() => _LyricsPageScreenState();
+}
+
+class _LyricsPageScreenState extends State<LyricsPageScreen> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late TextEditingController _commentController;
+  @override
+  void initState() {
+    _commentController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  var display = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +111,7 @@ class LyricsPageScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Titre du song',
+                                        widget.lyricsModel.title,
                                         style: TextStyle(
                                           color: AppColors.secondaryColor,
                                           fontSize: AppFonts.cardFirstFontSize,
@@ -92,11 +120,11 @@ class LyricsPageScreen extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          context.router
-                                              .push(const ArtistRoute());
+                                          // context.router
+                                          //     .push(const ArtistRoute());
                                         }, //TODO : Redirect to the artist page
                                         child: Text(
-                                          'Nom de l\'artiste',
+                                          widget.lyricsModel.authors![0].name,
                                           style: TextStyle(
                                             color: AppColors.primaryColor,
                                             fontSize:
@@ -113,8 +141,10 @@ class LyricsPageScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     IconButton(
-                                      onPressed:
-                                          () {}, //TODO : Like ation button
+                                      onPressed: () {
+                                        context.read<LyricsCubit>().likeLyrics(
+                                            lyricsId: widget.lyricsModel.id);
+                                      }, //TODO : Like ation button
                                       iconSize: AppFonts.iconSize,
                                       color: AppColors.secondaryColor,
                                       icon: const Icon(Icons.favorite_border),
@@ -169,9 +199,13 @@ class LyricsPageScreen extends StatelessWidget {
                             ],
                           ),
                           child: InkWell(
-                            onTap: () {}, //TODO : Open youtube player
+                            onTap: () {
+                              setState(() {
+                                display = !display;
+                              });
+                            }, //TODO : Open youtube player
                             child: Icon(
-                              Icons.play_arrow_rounded,
+                              display ? Icons.stop : Icons.play_arrow_rounded,
                               size: 45,
                               color: AppColors.secondaryColor,
                             ),
@@ -180,29 +214,40 @@ class LyricsPageScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Les paroles [Title]',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                  Container(
+                    child: display
+                        ? const YoutubePlayerWidget()
+                        : const SizedBox(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Les paroles',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 18,
-                      ),
-                      Text(
-                        'Titre du song',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(
+                          height: 18,
                         ),
-                      ),
-                    ],
+                        Text(
+                          widget.lyricsModel.content,
+                          softWrap: true,
+                          style: TextStyle(
+                            // color: Colors.black,
+                            fontSize: AppFonts.subTitleFontSize,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
                   ),
                   const Text(
                     'Commentaires',
@@ -212,25 +257,45 @@ class LyricsPageScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  for (int i = 0;
+                      i < widget.lyricsModel.comments!.length;
+                      i++) ...[
+                    ListTile(
+                      leading: const CircleAvatar(radius: 15),
+                      title: Text(widget.lyricsModel.comments![i].comment),
+                    ),
+                  ]
                 ],
               ),
             ),
             Positioned(
               bottom: 0,
-              child: SizedBox(
+              child: Container(
+                color: Colors.white.withOpacity(0.5),
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      hintText: 'Commenter',
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                      suffixIcon: Icon(
-                        Icons.emoji_emotions_outlined,
-                        size: AppFonts.iconSize,
+                  child: Form(
+                    key: formKey,
+                    child: TextFormField(
+                      controller: _commentController,
+                      onFieldSubmitted: (v) {
+                        context.read<LyricsCubit>().commentLyrics(
+                              comment: v,
+                              lyricsId: widget.lyricsModel.id,
+                            );
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        hintText: 'Commenter',
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        suffixIcon: Icon(
+                          Icons.emoji_emotions_outlined,
+                          size: AppFonts.iconSize,
+                        ),
+                        fillColor: Colors.transparent,
                       ),
                     ),
                   ),

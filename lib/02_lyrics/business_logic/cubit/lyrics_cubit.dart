@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:kamer_lyrics/02_lyrics/data/models/lyrics_model.dart';
 import 'package:kamer_lyrics/02_lyrics/data/repositories/lyrics_repository.dart';
 
@@ -38,5 +39,13 @@ class LyricsCubit extends Cubit<LyricsState> {
         ),
       );
     }
+  }
+
+  commentLyrics({required String comment, required int lyricsId}) async {
+    await lyricsRepository.commentLyrics(comment: comment, lyricsId: lyricsId);
+  }
+
+  likeLyrics({required int lyricsId}) async {
+    await lyricsRepository.likeLyrics(lyricsId: lyricsId);
   }
 }

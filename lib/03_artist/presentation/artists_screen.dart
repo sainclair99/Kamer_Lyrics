@@ -2,23 +2,23 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kamer_lyrics/03_artist/business_logic/cubit/artist_cubit.dart';
 import 'package:kamer_lyrics/shared/routes/routes.dart';
 
 import '../../service_locator.dart';
-import '../../shared/widgets/lyrics_list_item_widget.dart';
-import '../business_logic/cubit/lyrics_cubit.dart';
+import '../../shared/widgets/artist_list_item_widget.dart';
 
 @RoutePage()
-class LyricsScreen extends StatelessWidget {
-  const LyricsScreen({super.key});
+class ArtistsScreen extends StatelessWidget {
+  const ArtistsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<LyricsCubit, LyricsState>(
-        bloc: getIt.get<LyricsCubit>(),
+      body: BlocBuilder<ArtistCubit, ArtistState>(
+        bloc: getIt.get<ArtistCubit>(),
         builder: ((context, state) {
-          if (state.isLoadingLyrics) {
+          if (state.isLoadingArtists) {
             return const Center(
               child: CupertinoActivityIndicator(
                 radius: 50,
@@ -26,7 +26,7 @@ class LyricsScreen extends StatelessWidget {
             );
           }
 
-          if (state.errorLoadingLyrics) {
+          if (state.errorLoadingArtists) {
             return const Center(
               child: CupertinoActivityIndicator(
                 radius: 70,
@@ -35,20 +35,22 @@ class LyricsScreen extends StatelessWidget {
             );
           }
 
-          var data = state.lyrics!;
+          var data = state.artists!;
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+          return SizedBox(
+            width: MediaQuery.of(context).size.width,
             child: ListView.separated(
               itemCount: data.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 8),
+              separatorBuilder: (context, index) => const Divider(),
               itemBuilder: (context, index) {
                 var item = data[index];
-                return LyricsListItemWidget(
-                  lyrics: item,
-                  onTap: () => context.router.push(
-                    LyricsRouteRoute(lyricsModel: item),
-                  ),
+                return ArtistListItemWidget(
+                  title: item.name,
+                  status: item.musicalGenre,
+                  numberLikes: 10,
+                  onTap: () {
+                    context.router.push(ArtistRoute(artistModel: item));
+                  },
                 );
               },
             ),

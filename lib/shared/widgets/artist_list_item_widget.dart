@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kamer_lyrics/02_lyrics/business_logic/cubit/lyrics_cubit.dart';
-import 'package:kamer_lyrics/02_lyrics/data/models/lyrics_model.dart';
-import 'package:kamer_lyrics/service_locator.dart';
 
 import '../utils/app_colors.dart';
 import '../utils/app_fonts.dart';
 
-class LyricsListItemWidget extends StatelessWidget {
-  final LyricsModel lyrics;
+class ArtistListItemWidget extends StatelessWidget {
+  final String title;
+  final String status;
+  final int numberLikes;
+  final String? imageUrl;
   final Function()? onTap;
-
-  const LyricsListItemWidget({
+  const ArtistListItemWidget({
     super.key,
-    required this.lyrics,
+    required this.title,
+    required this.status,
+    this.numberLikes = 0,
+    this.imageUrl,
     this.onTap,
   });
 
@@ -39,11 +40,11 @@ class LyricsListItemWidget extends StatelessWidget {
                     color: Colors.teal,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: lyrics.image != null
+                  child: imageUrl != null
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image(
-                            image: NetworkImage(lyrics.image!),
+                            image: NetworkImage(imageUrl!),
                             fit: BoxFit.cover,
                           ),
                         )
@@ -57,7 +58,7 @@ class LyricsListItemWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          lyrics.title,
+                          title,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: AppFonts.subTitleFontSize,
@@ -66,7 +67,7 @@ class LyricsListItemWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          lyrics.authors![0].name,
+                          status,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: AppFonts.primaryFontSize,
@@ -78,20 +79,30 @@ class LyricsListItemWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text("${lyrics.liskesCount}"),
-                      IconButton(
-                        onPressed: () {
-                          getIt
-                              .get<LyricsCubit>()
-                              .likeLyrics(lyricsId: lyrics.id);
-                        }, //TODO : like
-                        icon: const Icon(Icons.favorite_border),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: GestureDetector(
+                    onTap: (){}, //TODO : follow the artist
+                    child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                    ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Center(
+                          child: Text(
+                            'Suivre',
+                            style: TextStyle(
+                              fontSize: AppFonts.primaryFontSize,
+                              fontWeight: AppFonts.titleFontWeight,
+                              color: AppColors.secondaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],

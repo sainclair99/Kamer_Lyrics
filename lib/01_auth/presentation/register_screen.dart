@@ -172,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     SubmitButton(
                                       height: 45,
                                       width: w * 0.7,
-                                      loading: state.isRegistrating,
+                                      loading: state.isRegistering,
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
                                           context.read<AuthCubit>().register(

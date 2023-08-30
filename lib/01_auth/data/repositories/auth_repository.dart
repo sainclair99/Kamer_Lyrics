@@ -24,13 +24,11 @@ class AuthRepository {
 
     var data = response.data;
 
-    // !---------------------
     var token = data['token'];
     if (token != null) {
       var prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
     }
-    // !---------------------
 
     return UserModel.fromJson(data['user']);
   }
@@ -52,11 +50,15 @@ class AuthRepository {
     );
 
     var data = response.data;
-    
 
     return UserModel.fromJson(data['user']);
   }
-  
+
+  // * ----------------------
+  logout() async {
+    await dio.post('/api/logout');
+  }
+
   // * ----------------------
   Future<UserModel> getUser() async {
     Response response = await dio.get('/api/me');

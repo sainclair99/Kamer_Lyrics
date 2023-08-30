@@ -15,16 +15,44 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AppInitRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AppInitScreen(),
+      );
+    },
     ApplicationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const ApplicationScreen(),
       );
     },
-    ArtistRoute.name: (routeData) {
+    ArticleRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ArtistScreen(),
+        child: const ArticleScreen(),
+      );
+    },
+    ArticlesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ArticlesScreen(),
+      );
+    },
+    ArtistRoute.name: (routeData) {
+      final args = routeData.argsAs<ArtistRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ArtistScreen(
+          key: args.key,
+          artistModel: args.artistModel,
+        ),
+      );
+    },
+    ArtistsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ArtistsScreen(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -39,10 +67,20 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginScreen(),
       );
     },
-    LyricsRouteRoute.name: (routeData) {
+    LyricsFormRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LyricsPageScreen(),
+        child: const LyricsFormScreen(),
+      );
+    },
+    LyricsRouteRoute.name: (routeData) {
+      final args = routeData.argsAs<LyricsRouteRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: LyricsPageScreen(
+          key: args.key,
+          lyricsModel: args.lyricsModel,
+        ),
       );
     },
     LyricsRoute.name: (routeData) {
@@ -67,6 +105,20 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
+/// [AppInitScreen]
+class AppInitRoute extends PageRouteInfo<void> {
+  const AppInitRoute({List<PageRouteInfo>? children})
+      : super(
+          AppInitRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AppInitRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [ApplicationScreen]
 class ApplicationRoute extends PageRouteInfo<void> {
   const ApplicationRoute({List<PageRouteInfo>? children})
@@ -81,15 +133,80 @@ class ApplicationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ArtistScreen]
-class ArtistRoute extends PageRouteInfo<void> {
-  const ArtistRoute({List<PageRouteInfo>? children})
+/// [ArticleScreen]
+class ArticleRoute extends PageRouteInfo<void> {
+  const ArticleRoute({List<PageRouteInfo>? children})
       : super(
+          ArticleRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ArticleRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ArticlesScreen]
+class ArticlesRoute extends PageRouteInfo<void> {
+  const ArticlesRoute({List<PageRouteInfo>? children})
+      : super(
+          ArticlesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ArticlesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ArtistScreen]
+class ArtistRoute extends PageRouteInfo<ArtistRouteArgs> {
+  ArtistRoute({
+    Key? key,
+    required ArtistModel artistModel,
+    List<PageRouteInfo>? children,
+  }) : super(
           ArtistRoute.name,
+          args: ArtistRouteArgs(
+            key: key,
+            artistModel: artistModel,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'ArtistRoute';
+
+  static const PageInfo<ArtistRouteArgs> page = PageInfo<ArtistRouteArgs>(name);
+}
+
+class ArtistRouteArgs {
+  const ArtistRouteArgs({
+    this.key,
+    required this.artistModel,
+  });
+
+  final Key? key;
+
+  final ArtistModel artistModel;
+
+  @override
+  String toString() {
+    return 'ArtistRouteArgs{key: $key, artistModel: $artistModel}';
+  }
+}
+
+/// generated route for
+/// [ArtistsScreen]
+class ArtistsRoute extends PageRouteInfo<void> {
+  const ArtistsRoute({List<PageRouteInfo>? children})
+      : super(
+          ArtistsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ArtistsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -123,17 +240,55 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LyricsPageScreen]
-class LyricsRouteRoute extends PageRouteInfo<void> {
-  const LyricsRouteRoute({List<PageRouteInfo>? children})
+/// [LyricsFormScreen]
+class LyricsFormRoute extends PageRouteInfo<void> {
+  const LyricsFormRoute({List<PageRouteInfo>? children})
       : super(
+          LyricsFormRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LyricsFormRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [LyricsPageScreen]
+class LyricsRouteRoute extends PageRouteInfo<LyricsRouteRouteArgs> {
+  LyricsRouteRoute({
+    Key? key,
+    required LyricsModel lyricsModel,
+    List<PageRouteInfo>? children,
+  }) : super(
           LyricsRouteRoute.name,
+          args: LyricsRouteRouteArgs(
+            key: key,
+            lyricsModel: lyricsModel,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'LyricsRouteRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<LyricsRouteRouteArgs> page =
+      PageInfo<LyricsRouteRouteArgs>(name);
+}
+
+class LyricsRouteRouteArgs {
+  const LyricsRouteRouteArgs({
+    this.key,
+    required this.lyricsModel,
+  });
+
+  final Key? key;
+
+  final LyricsModel lyricsModel;
+
+  @override
+  String toString() {
+    return 'LyricsRouteRouteArgs{key: $key, lyricsModel: $lyricsModel}';
+  }
 }
 
 /// generated route for

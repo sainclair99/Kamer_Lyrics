@@ -19,4 +19,18 @@ class LyricsRepository {
 
     return data;
   }
+
+  commentLyrics({
+    required String comment,
+    required int lyricsId,
+  }) async {
+    await dio.post(
+      '/api/lyrics/$lyricsId/comment',
+      queryParameters: {'commentaire': comment},
+    );
+  }
+
+  likeLyrics({required int lyricsId}) async {
+    await dio.post('/api/lyrics/$lyricsId/like');
+  }
 }

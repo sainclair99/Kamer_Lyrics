@@ -59,7 +59,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(
         state.copyWith(
-          isRegistrating: true,
+          isRegistering: true,
           successRegistration: false,
           errorRegistration: false,
         ),
@@ -74,7 +74,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(
         state.copyWith(
           user: user,
-          isRegistrating: false,
+          isRegistering: false,
           successRegistration: true,
           errorRegistration: false,
         ),
@@ -82,9 +82,41 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          isRegistrating: false,
+          isRegistering: false,
           successRegistration: false,
           errorRegistration: true,
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  // * logout states emitted
+  logout() async {
+    try {
+      emit(
+        state.copyWith(
+          isDisconnecting: true,
+          successDisconnection: false,
+          errorDisconnection: false,
+        ),
+      );
+
+      await authRepository.logout();
+
+      emit(
+        state.copyWith(
+          isDisconnecting: false,
+          successDisconnection: true,
+          errorDisconnection: false,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          isDisconnecting: false,
+          successDisconnection: false,
+          errorDisconnection: true,
           message: e.toString(),
         ),
       );

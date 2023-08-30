@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:kamer_lyrics/shared/utils/app_fonts.dart';
+
+import '../../02_lyrics/data/models/lyrics_model.dart';
 
 class LyricsSliderItemWidget extends StatelessWidget {
   final String artistName;
-  final String songTitle;
   final String imagePath;
+  final LyricsModel lyrics;
   const LyricsSliderItemWidget({
     super.key,
     required this.artistName,
-    required this.songTitle,
-    required this.imagePath,
+    this.imagePath = 'assets/images/dieu-donne-blanche-bailly.jpg',
+    required this.lyrics,
   });
 
   @override
@@ -38,8 +41,8 @@ class LyricsSliderItemWidget extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image(
-                        image: AssetImage(
-                          imagePath,
+                        image: NetworkImage(
+                          lyrics.image ?? imagePath,
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -73,17 +76,17 @@ class LyricsSliderItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                songTitle,
-                style: const TextStyle(
-                  fontSize: 30,
+                lyrics.title,
+                style: TextStyle(
+                  fontSize: AppFonts.cardFirstFontSize,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
               Text(
                 artistName,
-                style: const TextStyle(
-                  fontSize: 25,
+                style: TextStyle(
+                  fontSize: AppFonts.cardSecondFontSize,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

@@ -9,9 +9,14 @@ class AuthState {
   final bool errorLoginging;
 
   // * Register states
-  final bool isRegistrating;
+  final bool isRegistering;
   final bool successRegistration;
   final bool errorRegistration;
+
+  // * Logout states
+  final bool isDisconnecting;
+  final bool successDisconnection;
+  final bool errorDisconnection;
 
   // * Init States
   final bool isCheckingAuthState;
@@ -26,9 +31,13 @@ class AuthState {
     this.errorLoginging = false,
     this.successLoginging = false,
     //* register
-    this.isRegistrating = false,
+    this.isRegistering = false,
     this.errorRegistration = false,
     this.successRegistration = false,
+    //* logout
+    this.isDisconnecting = false,
+    this.successDisconnection = false,
+    this.errorDisconnection = false,
     //* init
     this.isCheckingAuthState = false,
     this.successCheckingAuthState = false,
@@ -41,9 +50,12 @@ class AuthState {
     bool? isLoginging,
     bool? successLoginging,
     bool? errorLoginging,
-    bool? isRegistrating,
+    bool? isRegistering,
     bool? successRegistration,
     bool? errorRegistration,
+    bool? isDisconnecting,
+    bool? successDisconnection,
+    bool? errorDisconnection,
     bool? isCheckingAuthState,
     bool? successCheckingAuthState,
     bool? errorCheckingAuthState,
@@ -56,9 +68,13 @@ class AuthState {
         successLoginging: successLoginging ?? this.successLoginging,
         errorLoginging: errorLoginging ?? this.errorLoginging,
         //* register
-        isRegistrating: isRegistrating ?? this.isRegistrating,
+        isRegistering: isRegistering ?? this.isRegistering,
         successRegistration: successRegistration ?? this.successRegistration,
         errorRegistration: errorRegistration ?? this.errorRegistration,
+        //* logout
+        isDisconnecting: isDisconnecting ?? this.isDisconnecting,
+        successDisconnection: successDisconnection ?? this.successDisconnection,
+        errorDisconnection: errorDisconnection ?? this.errorDisconnection,
         //* init
         isCheckingAuthState: isCheckingAuthState ?? this.isCheckingAuthState,
         successCheckingAuthState:

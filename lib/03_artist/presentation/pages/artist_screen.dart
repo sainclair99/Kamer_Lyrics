@@ -6,11 +6,15 @@ import 'package:kamer_lyrics/shared/widgets/glass_morphism.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:social_media_buttons/social_media_buttons.dart';
 
-import 'shared/widgets/lyrics_slider_item_widget.dart';
+import '../../data/models/artist_model.dart';
 
 @RoutePage()
 class ArtistScreen extends StatelessWidget {
-  const ArtistScreen({super.key});
+  final ArtistModel artistModel;
+  const ArtistScreen({
+    super.key,
+    required this.artistModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,30 +85,30 @@ class ArtistScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      const Text(
-                        'Nom de l\'artiste',
-                        style: TextStyle(
+                      Text(
+                        artistModel.name,
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'XX Lyrics',
-                            style: TextStyle(
+                            '${artistModel.lyrics.length} Lyrics',
+                            style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(
-                            'XX Fans',
-                            style: TextStyle(
+                            '${artistModel.followersCount} Fans',
+                            style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -141,11 +145,11 @@ class ArtistScreen extends StatelessWidget {
                                 color: Color.fromARGB(115, 122, 119, 119)),
                           ),
                         ),
-                        child: const Text(
-                          'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, cupiditate. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, cupiditate.',
+                        child: Text(
+                          "${artistModel.biography}",
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -193,22 +197,23 @@ class ArtistScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 200,
-              child: ListView.separated(
-                padding: const EdgeInsets.only(top: 0.0),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return const LyricsSliderItemWidget(
-                    artistName: 'Nom de l\'artiste',
-                    songTitle: 'Titre du song',
-                    imagePath: 'assets/images/dieu-donne-blanche-bailly.jpg',
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(),
-                itemCount: 3,
-              ),
-            ),
+            //TODO : To review for artist lyrics
+            // SizedBox(
+            //   height: 200,
+            //   child: ListView.separated(
+            //     padding: const EdgeInsets.only(top: 0.0),
+            //     scrollDirection: Axis.horizontal,
+            //     itemBuilder: (context, index) {
+            //       return const LyricsSliderItemWidget(
+            //         artistName: 'Nom de l\'artiste',
+            //         songTitle: 'Titre du song',
+            //         imagePath: 'assets/images/dieu-donne-blanche-bailly.jpg',
+            //       );
+            //     },
+            //     separatorBuilder: (context, index) => const SizedBox(),
+            //     itemCount: 3,
+            //   ),
+            // ),
             const SizedBox(height: 12),
             const Padding(
               padding: EdgeInsets.only(left: 8.0),

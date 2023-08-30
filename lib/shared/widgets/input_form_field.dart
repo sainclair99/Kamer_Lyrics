@@ -9,6 +9,11 @@ class InputFormField extends StatefulWidget {
   final List<String? Function(String?)> validators;
   final Iterable<String>? autofillHints;
 
+  final int? maxLines;
+  final double? borderRadius;
+  final double? labelSize;
+  final double? height;
+
   const InputFormField({
     super.key,
     this.label = null,
@@ -17,6 +22,10 @@ class InputFormField extends StatefulWidget {
     this.controller,
     this.validators = const [],
     this.autofillHints,
+    this.maxLines,
+    this.borderRadius,
+    this.labelSize,
+    this.height,
   });
 
   @override
@@ -32,26 +41,27 @@ class _InputFormFieldState extends State<InputFormField> {
         widget.label != null
             ? Text(
                 widget.label!,
-                style: const TextStyle(
-                  fontSize: 20,
+                style: TextStyle(
+                  fontSize: widget.labelSize ?? 20,
                   fontWeight: FontWeight.bold,
                 ),
               )
             : const SizedBox(height: 0, width: 0),
         SizedBox(
-          height: 50,
+          height: widget.height ?? 50,
           child: TextFormField(
             controller: widget.controller,
             keyboardType: widget.keyboardType ?? TextInputType.text,
-            maxLines: 1,
+            maxLines: widget.maxLines ?? 1,
             autofillHints: widget.autofillHints,
             validator: FormBuilderValidators.compose(widget.validators),
             decoration: InputDecoration(
               hintText: widget.hintText,
               contentPadding:
                   const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
-              border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(widget.borderRadius ?? 50)),
               ),
               filled: true,
               fillColor: Colors.white.withOpacity(0.8),
