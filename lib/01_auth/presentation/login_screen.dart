@@ -46,6 +46,11 @@ class _LoginScreenState extends State<LoginScreen> {
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state.errorLoginging) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message!),
+                ),
+              );
               //TODO ...Set login error state action
             }
 
@@ -142,7 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         errorText: 'Mot de passe requis',
                                       ),
                                       FormBuilderValidators.match(
-                                          '[a-zA-Z0-9@]+'),
+                                        '[A-Z][a-zA-Z0-9@]+',
+                                        errorText:
+                                            'Le mot de passe doit commencé par une majuscule',
+                                      ),
                                     ],
                                   ),
                                   Row(

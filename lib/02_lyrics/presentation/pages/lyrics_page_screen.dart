@@ -234,7 +234,7 @@ class _LyricsPageScreenState extends State<LyricsPageScreen> {
                           height: 18,
                         ),
                         Text(
-                          widget.lyricsModel.content,
+                          widget.lyricsModel.content.replaceAll('\\n', '\n'),
                           softWrap: true,
                           style: TextStyle(
                             // color: Colors.black,

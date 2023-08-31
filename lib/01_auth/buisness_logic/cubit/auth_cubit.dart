@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 
 import '../../data/models/user_model.dart';
 import '../../data/repositories/auth_repository.dart';
@@ -39,12 +40,16 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       );
     } catch (e) {
+      dynamic msg = '';
+      if (e is DioException) {
+        msg = "Email ou mot de passe Incorrect !";
+      }
       emit(
         state.copyWith(
           isLoginging: false,
           successLoginging: false,
           errorLoginging: true,
-          message: e.toString(),
+          message: msg,
         ),
       );
     }
